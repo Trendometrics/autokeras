@@ -53,7 +53,7 @@ class DenseBlock(block_module.Block):
         output_node = input_node
         output_node = reduction.Flatten().build(hp, output_node)
 
-        num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3], default=2)
+        num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3, 4, 5], default=2)
         use_batchnorm = self.use_batchnorm
         if use_batchnorm is None:
             use_batchnorm = hp.Boolean('use_batchnorm', default=False)
