@@ -126,7 +126,7 @@ class AutoModel(object):
             seed=self.seed,
             project_name=project_name,
             **kwargs)
-        self._split_dataset = False
+        self._split_dataset = True
         self._heads = [output_node.in_blocks[0] for output_node in self.outputs]
         self._input_adapters = [input_node.get_adapter()
                                 for input_node in self.inputs]
