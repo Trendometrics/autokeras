@@ -61,10 +61,10 @@ class DenseBlock(block_module.Block):
         use_batchnorm = self.use_batchnorm
         if use_batchnorm is None:
             use_batchnorm = hp.Boolean('use_batchnorm', default=False)
-        if self.dropout_rate is not None:
-            dropout_rate = self.dropout_rate
-        else:
-            dropout_rate = hp.Choice('dropout_rate', [0.0, 0.25, 0.5], default=0)
+        # if self.dropout_rate is not None:
+        #     dropout_rate = self.dropout_rate
+        # else:
+        #     dropout_rate = hp.Choice('dropout_rate', [0.0, 0.25, 0.5], default=0)
 
         for i in range(num_layers):
             units = hp.Choice(
@@ -79,8 +79,8 @@ class DenseBlock(block_module.Block):
                 output_node = layers.Activation('sigmoid')(output_node)
             else:
                 output_node = layers.ReLU()(output_node)
-            if dropout_rate > 0:
-                output_node = layers.Dropout(dropout_rate)(output_node)
+            # if dropout_rate > 0:
+            #     output_node = layers.Dropout(dropout_rate)(output_node)
         return output_node
 
 
