@@ -53,7 +53,11 @@ class DenseBlock(block_module.Block):
         output_node = input_node
         output_node = reduction.Flatten().build(hp, output_node)
 
-        num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3, 4], default=2)
+        if hp.Choice('gaussian_input_noise', [True, False], default=False):
+            noise_std = hp.Choice('gaussian_input_noise_std', [0.1, 0.2, 0.3], default=0.1)
+            output_node = layers.GaussianNoise(noise_std)(output_node)
+
+        num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3, 4, 5], default=2)
         use_batchnorm = self.use_batchnorm
         if use_batchnorm is None:
             use_batchnorm = hp.Boolean('use_batchnorm', default=False)
@@ -65,12 +69,16 @@ class DenseBlock(block_module.Block):
         for i in range(num_layers):
             units = hp.Choice(
                 'units_{i}'.format(i=i),
-                [16, 32, 64, 128, 256, 512, 1024],
+                [16, 32, 64, 128, 256],
                 default=32)
             output_node = layers.Dense(units)(output_node)
             if use_batchnorm:
                 output_node = layers.BatchNormalization()(output_node)
-            output_node = layers.ReLU()(output_node)
+
+            if hp.Choice(f'sigmoid_activation_{i}', [True, False], default=False):
+                output_node = layers.Activation('sigmoid')(output_node)
+            else:
+                output_node = layers.ReLU()(output_node)
             if dropout_rate > 0:
                 output_node = layers.Dropout(dropout_rate)(output_node)
         return output_node
