@@ -58,7 +58,7 @@ class DenseBlock(block_module.Block):
         #     noise_std = hp.Choice('gaussian_input_noise_std', [0.1, 0.2, 0.3], default=0.2)
         #     output_node = layers.GaussianNoise(noise_std)(output_node)
 
-        num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3, 4, 5], default=2)
+        num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3, 4, 5, 6], default=2)
         use_batchnorm = self.use_batchnorm
         if use_batchnorm is None:
             use_batchnorm = hp.Boolean('use_batchnorm', default=False)
@@ -70,7 +70,7 @@ class DenseBlock(block_module.Block):
         for i in range(num_layers):
             units = hp.Choice(
                 'units_{i}'.format(i=i),
-                [16, 32, 64, 128, 256],
+                [16, 32, 64, 128, 256, 512],
                 default=32)
             output_node = layers.Dense(units)(output_node)
             if use_batchnorm:
