@@ -53,10 +53,6 @@ class DenseBlock(block_module.Block):
         output_node = input_node
         output_node = reduction.Flatten().build(hp, output_node)
 
-        # if hp.Choice('gaussian_input_noise', [True, False], default=False):
-        # if True:
-        #     noise_std = hp.Choice('gaussian_input_noise_std', [0.1, 0.2, 0.3], default=0.2)
-        #     output_node = layers.GaussianNoise(noise_std)(output_node)
         noise_std = hp.Choice('gaussian_input_noise_std', [0.0, 0.5, 0.1, 0.2], default=0)
         output_node = layers.GaussianNoise(noise_std)(output_node)
 
