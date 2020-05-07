@@ -105,6 +105,7 @@ class AutoModel(object):
                  tuner: Union[str, Type[AutoTuner]] = 'greedy',
                  overwrite: bool = False,
                  seed: Optional[int] = None,
+                 split_dataset: Optional[bool] = False,
                  **kwargs):
         self.inputs = nest.flatten(inputs)
         self.outputs = nest.flatten(outputs)
@@ -126,7 +127,7 @@ class AutoModel(object):
             seed=self.seed,
             project_name=project_name,
             **kwargs)
-        self._split_dataset = False
+        self._split_dataset = split_dataset
         self._heads = [output_node.in_blocks[0] for output_node in self.outputs]
         self._input_adapters = [input_node.get_adapter()
                                 for input_node in self.inputs]
