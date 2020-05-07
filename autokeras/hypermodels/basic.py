@@ -57,7 +57,7 @@ class DenseBlock(block_module.Block):
         # if True:
         #     noise_std = hp.Choice('gaussian_input_noise_std', [0.1, 0.2, 0.3], default=0.2)
         #     output_node = layers.GaussianNoise(noise_std)(output_node)
-        noise_std = hp.Choice('gaussian_input_noise_std', [0, 0.1, 0.2, 0.3], default=0)
+        noise_std = hp.Choice('gaussian_input_noise_std', [0.0, 0.5, 0.1, 0.2], default=0)
         output_node = layers.GaussianNoise(noise_std)(output_node)
 
         num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3, 4, 5], default=2)
