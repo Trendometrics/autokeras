@@ -68,7 +68,7 @@ class DenseBlock(block_module.Block):
         for i in range(num_layers):
             units = hp.Choice(
                 'units_{i}'.format(i=i),
-                [16, 32, 64, 128, 256],
+                [16, 32, 64, 128, 256, 512],
                 default=32)
             output_node = layers.Dense(units)(output_node)
             if use_batchnorm:
