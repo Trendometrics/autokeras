@@ -1,5 +1,6 @@
 import kerastuner
 import tensorflow as tf
+from tensorflow.python.keras.optimizer_v2.adam import Adam
 from tensorflow.python.util import nest
 
 from autokeras import hypermodels
@@ -274,7 +275,7 @@ class Graph(kerastuner.HyperModel, serializable.Serializable):
         optimizer = hp.Choice('optimizer',
                               ['adam', 'adadelta', 'sgd'],
                               default='adam')
-
+        optimizer = Adam(learning_rate=0.0005, beta_1=.5)
         model.compile(optimizer=optimizer,
                       metrics=self._get_metrics(),
                       loss=self._get_loss())
