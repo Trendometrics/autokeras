@@ -51,7 +51,7 @@ class DenseBlock(block_module.Block):
         utils.validate_num_inputs(inputs, 1)
         input_node = inputs[0]
         output_node = input_node
-        # output_node = reduction.Flatten().build(hp, output_node)
+        output_node = reduction.Flatten().build(hp, output_node)
 
         if hp.Boolean('noise_regularizer', default=False):
             output_node = layers.GaussianNoise(.15)(output_node)
@@ -64,8 +64,6 @@ class DenseBlock(block_module.Block):
                 [16, 32, 64, 128],
                 default=32)
             output_node = layers.Dense(units)(output_node)
-            # if use_batchnorm:
-            #     output_node = layers.BatchNormalization()(output_node)
 
             if hp.Boolean(f'sigmoid_{i}', default=True):
                 output_node = layers.Activation('sigmoid')(output_node)
