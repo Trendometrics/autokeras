@@ -58,6 +58,7 @@ class DenseBlock(block_module.Block):
 
         num_layers = self.num_layers or hp.Choice('num_layers', [1, 2, 3, 4, 5, 6], default=3)
 
+
         for i in range(num_layers):
             units = hp.Choice(
                 'units_{i}'.format(i=i),
