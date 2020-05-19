@@ -74,7 +74,7 @@ class DenseBlock(block_module.Block):
             if use_batchnorm:
                 output_node = layers.BatchNormalization()(output_node)
 
-            if hp.Choice(f'sigmoid_activation_{i}', [True, False], default=False):
+            if hp.Boolean(f'sigmoid_activation_{i}', default=True):
                 output_node = layers.Activation('sigmoid')(output_node)
             else:
                 output_node = layers.ReLU()(output_node)
